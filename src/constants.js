@@ -29,3 +29,7 @@ export const COLORS = {
   COLOR_BROWN: '#67472f',
   COLOR_SALMON: '#FF2E43'
 }
+
+export const FEATURE_FLAGS = {
+  USER_ACCOUNT: false
+}

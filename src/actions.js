@@ -4,6 +4,7 @@ import {
 } from './constants';
 import queryString from 'query-string';
 import config from './config.json';
+import {makeRadius} from './utils';
 
 function authenticatedRequest(dispatch,getState,action,method,payload,complete,errored) {
   // if (getState().user.token) {
@@ -77,13 +78,12 @@ export const userSignup = (credentials) => {
 
 function runQuery(dispatch,getState) {
   const query = getState().markers.query;
-  const radius = Math.sqrt(Math.pow(query.location.bounds.northEast.latitude - query.location.bounds.southWest.latitude,2) + Math.pow(query.location.bounds.northEast.longitude - query.location.bounds.southWest.longitude,2)) / 2;
   const action = '/api/marker?' + queryString.stringify({
     offset: query.paging.offset,
     limit: query.paging.limit,
     latitude: query.location.coordinates.latitude,
     longitude: query.location.coordinates.longitude,
-    radius: radius,
+    radius: makeRadius(query),
     dateStart: query.date.start.toISOString(),
     dateEnd: query.date.end.toISOString()
   });

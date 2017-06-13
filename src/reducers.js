@@ -35,6 +35,7 @@ const initialMarkersState = {
     },
     error: null
   },
+  downloadLink: null,
   markers: [],
   selected: null
 }

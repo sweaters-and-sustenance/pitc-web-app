@@ -9,6 +9,9 @@ import {
   userLogout,
   userSignup
 } from './actions'
+import {
+  FEATURE_FLAGS
+} from './constants'
 
 class App extends Component {
   constructor(props) {
@@ -63,40 +66,44 @@ class App extends Component {
         <nav className="navbar navbar-fixed-top">
           <div className="container-fluid">
             <div className="navbar-header">
-              <a className="navbar-brand" href="#">S&amp;S</a>
+              <a className="navbar-brand" href="/">
+                <img src="/logo.png" className="sas-logo" />
+              </a>
             </div>
-            <div className="navbar-form navbar-right">
-              { this.props.user.token == null ?
-                <button onClick={this.openLogin} className="btn btn-primary">Login</button> :
-                <span>
-                  <button onClick={this.props.myAccount} className="btn btn-info">My Account</button>&nbsp;
-                  <button onClick={this.props.userLogout} className="btn btn-warning">Logout</button>
-                </span>
-              }
-            </div>
+            { FEATURE_FLAGS.USER_ACCOUNT ?
+              <div className="navbar-form navbar-right">
+                { this.props.user.token == null ?
+                  <button onClick={this.openLogin} className="btn btn-primary">Login</button> :
+                  <span>
+                    <button onClick={this.props.myAccount} className="btn btn-info">My Account</button>&nbsp;
+                    <button onClick={this.props.userLogout} className="btn btn-warning">Logout</button>
+                  </span>
+                }
+              </div> : null }
           </div>
         </nav>
         <MarkerExplorer />
-        <Modal show={this.state.showingLogin && this.props.user.token == null} onHide={this.closeLogin}>
-          <Modal.Header closeButton>
-            <Modal.Title>Login</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            { this.props.user.error ? <div className="alert alert-success">{this.props.user.error}</div> : null }
-            <div className="form-group">
-              <label>Email</label>
-              <input type="email" className="form-control" onChange={(event) => this.setState({email:event.target.value})} />
-            </div>
-            <div className="form-group">
-              <label>Password</label>
-              <input type="password" className="form-control"  onChange={(event) => this.setState({password:event.target.value})} />
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <button onClick={this.signup} className="btn btn-primary">Signup</button>
-            <button onClick={this.login} className="btn btn-default">Login</button>
-          </Modal.Footer>
-        </Modal>
+        { FEATURE_FLAGS.USER_ACCOUNT ?
+          <Modal show={this.state.showingLogin && this.props.user.token == null} onHide={this.closeLogin}>
+            <Modal.Header closeButton>
+              <Modal.Title>Login</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              { this.props.user.error ? <div className="alert alert-success">{this.props.user.error}</div> : null }
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" className="form-control" onChange={(event) => this.setState({email:event.target.value})} />
+              </div>
+              <div className="form-group">
+                <label>Password</label>
+                <input type="password" className="form-control"  onChange={(event) => this.setState({password:event.target.value})} />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <button onClick={this.signup} className="btn btn-primary">Signup</button>
+              <button onClick={this.login} className="btn btn-default">Login</button>
+            </Modal.Footer>
+          </Modal> : null }
       </div>
     );
   }

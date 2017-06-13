@@ -13,10 +13,13 @@ import {
   updateMarkerQueryDateEnd
 } from './actions'
 import {
-  COLORS
+  COLORS,
+  API_URL
 } from './constants'
 import DatePicker from 'react-bootstrap-date-picker';
 import config from './config.json';
+import queryString from 'query-string';
+import {makeRadius} from './utils';
 
 class MarkerExplorer extends Component {
   constructor(props) {
@@ -86,6 +89,19 @@ class MarkerExplorer extends Component {
     this.map = m.target
   }
 
+  generateDownloadLink() {
+    return API_URL + '/api/marker?' + queryString.stringify({
+      offset: this.props.markers.query.paging.offset,
+      limit: this.props.markers.query.paging.limit,
+      latitude: this.props.markers.query.location.coordinates.latitude,
+      longitude: this.props.markers.query.location.coordinates.longitude,
+      radius: makeRadius(this.props.markers.query),
+      dateStart: this.props.markers.query.date.start.toISOString(),
+      dateEnd: this.props.markers.query.date.end.toISOString(),
+      format: 'csv'
+    });
+  }
+
   render() {
     return (
       <div className="MarkerExplorer">
@@ -150,6 +166,7 @@ class MarkerExplorer extends Component {
                   <label>Date End</label>
                   <DatePicker value={this.props.markers.query.date.end.toISOString()} onChange={(date) => this.updateDateEnd(date)} showClearButton={false} />
                 </div>
+                <a className="btn btn-primary" download href={this.generateDownloadLink()}>Download Results</a>
               </div>
             </div>
           </div>
