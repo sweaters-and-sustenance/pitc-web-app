@@ -1,0 +1,25 @@
+{
+  "name": "pitc-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.1",
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.2",
+    "csv-stringify": "^1.0.4",
+    "express": "^4.15.3",
+    "joi": "^10.5.2",
+    "jsonwebtoken": "^7.4.1",
+    "knex": "^0.13.0",
+    "morgan": "^1.8.2",
+    "mysql": "^2.14.1",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1"
+  }
+}

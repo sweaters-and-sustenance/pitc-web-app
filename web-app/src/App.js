@@ -67,7 +67,7 @@ class App extends Component {
           <div className="container-fluid">
             <div className="navbar-header">
               <a className="navbar-brand" href="/">
-                <img src="/logo.png" className="sas-logo" />
+                <img src="/logo.png" alt="Logo" className="sas-logo" />
               </a>
             </div>
             { FEATURE_FLAGS.USER_ACCOUNT ?

@@ -20,7 +20,7 @@ export const ACTION = {
   }
 }
 
-export const API_URL = 'http://localhost:8000'
+export const API_URL = '';
 
 export const COLORS = {
   COLOR_BLUE: '#00b19e',
